@@ -1,0 +1,135 @@
+--DATA CLEANING
+
+--FIND THE RECORDS(ROWS) FOR EACH ATTRIBUTE(COLUMNS) THAT IS NULL
+SELECT * FROM netflix_titles
+WHERE 
+    type IS NULL
+    OR
+    title IS NULL
+    OR
+    director IS NULL
+    OR
+    actors IS NULL
+    OR
+    country IS NULL
+    OR
+    date_added IS NULL
+    OR
+    release_year IS NULL
+    OR
+    rating IS NULL
+    OR
+    duration IS NULL
+    OR
+    listed_in IS NULL
+    OR
+    description IS NULL
+;
+
+----FIND THE RECORDS(ROWS) FOR EACH ATTRIBUTE(COLUMNS) THAT BLANK
+SELECT * FROM netflix_titles
+WHERE 
+    type = ''
+    OR
+    title  = ''
+    OR
+    director  = ''
+    OR
+    actors  = ''
+    OR
+    country  = ''
+    OR
+    rating  = ''
+    OR
+    duration  = ''
+    OR
+    listed_in  = ''
+    OR
+    description  = ''
+;
+
+
+
+--TO SHOW THE NUMBER OF BLANK RECORDS(ROWS) FOR EACH ATTRIBUTE(COLUMN)
+--NOT ENTIRELY BLANK RECORDS BUT RECORDS THAT IS NOT NULL BUT USES SPACE IN THE RECORDS.
+--WE KNOW THAT THE CSV FILE HAVE BLANK RECORDS(ROWS) THAT IS NOT NULL AS WE CHECK WITH THE CONDITIONS ABOVE.
+--THE CONDITIONS ABOVE DID NOT RETURN THE SAME NO. OF ROWS.
+/*
+KEY NOTES
+    1. No need to use GROUP BY as the columns are not in the select statement.
+    2. IFNULL(NULL, 'execute expression') is used to display 0.
+    3. As only using COUNT(*) will not display the value of 0.
+    4. IS NULL is used for date_added and release_year as they are both date data types.
+*/
+SELECT 'type' AS attribute, IFNULL(COUNT(*), 0) AS count
+FROM netflix_titles
+WHERE type = ''
+
+UNION ALL
+
+SELECT 'title', IFNULL(COUNT(*), 0) AS count
+FROM netflix_titles
+WHERE title = ''
+
+UNION ALL
+
+SELECT 'director', IFNULL(COUNT(*), 0) AS count
+FROM netflix_titles
+WHERE director = ''
+
+UNION ALL
+
+SELECT 'actors', IFNULL(COUNT(*), 0) AS count
+FROM netflix_titles
+WHERE actors = ''
+
+UNION ALL
+
+SELECT 'country', IFNULL(COUNT(*), 0) AS count
+FROM netflix_titles
+WHERE country = ''
+
+UNION ALL
+
+SELECT 'date_added', IFNULL(COUNT(*), 0) AS count
+FROM netflix_titles
+WHERE date_added IS NULL
+
+UNION ALL
+
+SELECT 'release_year', IFNULL(COUNT(*), 0) AS count
+FROM netflix_titles
+WHERE release_year IS NULL
+
+UNION ALL
+
+SELECT 'rating', IFNULL(COUNT(*), 0) AS count
+FROM netflix_titles
+WHERE rating = ''
+
+UNION ALL
+
+SELECT 'duration', IFNULL(COUNT(*), 0) AS count
+FROM netflix_titles
+WHERE duration = ''
+
+UNION ALL
+
+SELECT 'listed_in', IFNULL(COUNT(*), 0) AS count
+FROM netflix_titles
+WHERE listed_in = ''
+
+UNION ALL
+
+SELECT 'description', IFNULL(COUNT(*), 0) AS count
+FROM netflix_titles
+WHERE description = '';
+
+
+
+
+
+
+
+
+

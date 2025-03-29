@@ -1,0 +1,54 @@
+--CREATE A TABLE FOR THE DATASET
+DROP TABLE IF EXISTS netflix_titles;
+
+--Query; CAST(expression AS target_data_type)
+--IF int not working use signed or unsigned
+--CAST () used to convert a data type.
+--SUBSTRING(column_name, character_position) specify where to start the character
+SELECT * FROM netflix_titles
+ORDER BY CAST(SUBSTRING(show_id, 2) AS UNSIGNED);
+
+CREATE TABLE netflix_titles 
+    (
+        show_id VARCHAR(15) PRIMARY KEY,
+        type VARCHAR(15),
+        title VARCHAR(200),
+        director VARCHAR(250),
+        actors VARCHAR(1000), 
+        country VARCHAR(150),
+        date_added DATE,
+        release_year YEAR,
+        rating VARCHAR(100),
+        duration VARCHAR(50),
+        listed_in VARCHAR(150),
+        description VARCHAR(500)
+    );
+
+describe netflix_titles;
+
+--TO KNOW THE MYSQL DIRECTORY WHERE YOU CAN IMPORT OR EXPORT LOCAL FILES
+SHOW VARIABLES LIKE 'secure_file_priv';
+
+--TO KNOW IF THE PERMISSION TO SAVE LOCAL CSV IS ON
+--IF IT IS ON, YOU ARE GOOD
+--1 or 0 to turn it ON or OFF
+SHOW VARIABLES LIKE 'local_infile';
+SET GLOBAL local_infile = 1;
+
+/*  
+KEY NOTES TO REMEBER:
+1. USE DOUBLE BACK SLASH IN THE DIRECTORY INSTEAD OF SINGLE BACK SLASH
+2. ADD \r in the lines terminated by for it not to be error
+3. ADD ENCLOSED BY '"'
+4. LOAD DATA INFILE IS THE CORRECT ONE.
+5. LOAD DATA LOCAL INFILE WILL RETURN AS ERROR.
+*/
+LOAD DATA INFILE 'C:\\ProgramData\\MySQL\\MySQL Server 9.2\\Uploads\\netflix_titles.csv'
+INTO TABLE netflix_titles
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS;
+
+
+
